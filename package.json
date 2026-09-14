@@ -1,0 +1,22 @@
+{
+  "name": "soulcare-ai",
+  "version": "1.0.0",
+  "description": "SoulCare is an AI-powered mental wellness platform exploring multimodal emotion recognition and personalized stress support through research-driven technology.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test node --test",
+    "start": "NODE_ENV=production node src/index.js",
+    "dev": "NODE_ENV=development node --watch src/index.js",
+    "lint": "node --check src/*.js tests/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://localhost:26831/ums-l200220279/soulcare-ai"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}
