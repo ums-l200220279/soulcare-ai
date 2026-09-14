@@ -1,8 +1,30 @@
 from app.core.config import settings
 from app.models.support import CheckInRequest, CheckInResponse
 
+CRISIS_KEYWORDS = {
+    "suicide",
+    "self-harm",
+    "kill myself",
+    "end my life",
+    "hurt myself",
+}
+
 
 def build_support_response(payload: CheckInRequest) -> CheckInResponse:
+    combined_signal = f"{payload.mood} {payload.text_signal or ''} {payload.voice_signal or ''}".lower()
+    if any(keyword in combined_signal for keyword in CRISIS_KEYWORDS):
+        return CheckInResponse(
+            stress_band="high",
+            suggested_action=(
+                "If you may harm yourself or someone else, call emergency services now. "
+                "Contact a licensed crisis hotline or trusted person immediately."
+            ),
+            model_signal_used=["mood", "stress_level", "safety_escalation"],
+            disclaimer=(
+                f"{settings.support_disclaimer} For imminent risk, seek emergency or crisis services now."
+            ),
+        )
+
     if payload.stress_level >= 8:
         stress_band = "high"
         suggested_action = (
